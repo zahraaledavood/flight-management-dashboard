@@ -4,13 +4,11 @@ type ButtonProps = {
   label: string;
   onClick?: () => void;
   disabled?: boolean;
-  loginCount: number;
 };
 
 const Button = ({
   label,
   disabled = false,
-  loginCount,
   onClick,
 }: ButtonProps) => {
   return (
@@ -24,9 +22,6 @@ const Button = ({
           {label}
         </button>
       </div>
-      {loginCount > 1 && (
-        <p className="mt-2">You have attempted to log in {loginCount} time.</p>
-      )}
     </>
   );
 };

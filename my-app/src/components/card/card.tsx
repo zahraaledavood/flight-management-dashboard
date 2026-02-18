@@ -7,13 +7,12 @@ type CardProps = {
     imgSrc: string
     title: string
     content: string
-    loginCount: number
     remember: boolean
     onLoginClick: () => void
     onToggle: (value: boolean) => void
 }
 
-const Card = ({imgSrc, title, content, loginCount, remember, onLoginClick, onToggle}: CardProps) => {
+const Card = ({imgSrc, title, content, remember, onLoginClick, onToggle}: CardProps) => {
 
     return (
         <>
@@ -23,10 +22,10 @@ const Card = ({imgSrc, title, content, loginCount, remember, onLoginClick, onTog
                     <div className="font-bold text-xl mb-2">
                         {title}
                     </div>
-                    <p className="text-gray-700 text-white">
+                    <p className="text-white">
                         {content}
                     </p>
-                    <Button label="Login" onClick={onLoginClick} loginCount={loginCount} />
+                    <Button label="Login" onClick={onLoginClick} />
                     <Toggle label="Remember me" active={remember} onChange={onToggle} />
                 </div>
             </div>
