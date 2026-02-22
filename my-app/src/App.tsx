@@ -7,6 +7,9 @@ import Modal from './components/modal/modal.tsx';
 import LoginForm from './components/login-form/login-form.tsx';
 import SignUp from './components/signup-form/signup-form.tsx';
 import AuthService from './services/auth.service.ts';
+import { useAuth } from "./components/context/auth-context.tsx";
+
+
 
 
 function App() {
@@ -41,11 +44,14 @@ function App() {
     return result
   }
 
+  const {dispatch} = useAuth();
+
   const handleSignUp = async (data: {name:string; email:string; password:string}) => {
     const result = await AuthService.Signup(data)
 
     if (result.success){
       setIsSignup(false)
+      dispatch ({type: "LOGIN", payload: {name: data.name, email: data.email}})
     }
 
     return result
@@ -55,7 +61,7 @@ function App() {
   return (
     <>
       <Header items={items} active='Home' />
-      <Modal isOpen={isLoginOpen}
+       <Modal isOpen={isLoginOpen}
                 onClose={() => setIsLoggin(false)}
             >
                 <LoginForm onLogin={handleLoginSubmit} />
@@ -70,9 +76,16 @@ function App() {
           onLoginClick={handleLogin}
           onToggle={handleToggle}
           remember={remember}
-      />
+      /> 
+
+      {/* <TaskProvider>
+          <AddTask/>
+          <TaskList/>
+      </TaskProvider> */}
     </>
   )
 }
 
 export default App
+
+
