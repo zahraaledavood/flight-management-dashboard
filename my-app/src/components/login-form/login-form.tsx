@@ -35,9 +35,7 @@ const LoginForm = ({onLogin}: LoginProps) => {
 
         if (!email){
             fieldErrors.email = "Email is required"
-        } else if (!/\S+@\S+\.\S+/.test(email)){
-            fieldErrors.email = "Email is invalid"
-        }
+        } 
 
         if (!password){
             fieldErrors.password = "Password is required"
@@ -77,7 +75,6 @@ const LoginForm = ({onLogin}: LoginProps) => {
                     <div className="form-group flex flex-col my-2">
                         <label htmlFor="email" className="text-start">Email</label>
                         <input
-                         type="email"
                          name="email"
                          placeholder="Enter your email"
                          className=" w-full h-full my-2 p-2 rounded rounded-3 border border-gray-300 text-gray-500 bg-transparent"

@@ -2,8 +2,8 @@
 import { createContext, useContext, useReducer } from "react";
 
 type User = {
-    name: string;
-    email: string
+    email: string;
+    password: string
 };
 
 type AuthState= {
@@ -13,6 +13,7 @@ type AuthState= {
 
 type AuthAction = 
 | { type: "LOGIN"; payload: User }
+| { type: "SIGNUP"; payload: User}
 | { type: "LOGOUT" };
 
 const initialState: AuthState = {
@@ -31,6 +32,8 @@ const authReducer = (state: AuthState, action:AuthAction): AuthState => {
     switch(action.type){
         case 'LOGIN':
             return {user: action.payload, isAuthenticated: true};
+        case 'SIGNUP': 
+            return {user: action.payload, isAuthenticated: true}
         case 'LOGOUT':
             return {user: null, isAuthenticated: false};
         default:

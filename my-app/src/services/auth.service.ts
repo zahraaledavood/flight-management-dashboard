@@ -1,4 +1,4 @@
-const API_URL = "https://jsonplaceholder.typicode.com";
+const API_URL = "https://dummyjson.com";
 
 type LoginData = {
     email:string
@@ -11,23 +11,19 @@ type AuthResponse = {
 }
 
 type SignupData = {
-    name:string
-    email:string
-    password:string
+    email: string
+    password: string
 }
 
 class AuthService {
     async login(data: LoginData): Promise<AuthResponse>{
         try{
-            const response = await fetch(`${API_URL}/posts`,{
+            const response = await fetch(`${API_URL}/auth/login`,{
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    username: data.email,
-                    password: data.password
-                })
+                body: JSON.stringify({ username: data.email, password: data.password })
             })
 
             if (response.ok){
@@ -51,16 +47,12 @@ class AuthService {
 
     async Signup(data: SignupData) : Promise<AuthResponse>{
         try {
-            const response = await fetch(`${API_URL}/users`, {
+            const response = await fetch(`${API_URL}/users/add`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({
-                    name: data.name,
-                    email: data.email,
-                    password: data.password
-                })
+                body: JSON.stringify({ email: data.email, password: data.password })
             })
 
             if (response.ok){

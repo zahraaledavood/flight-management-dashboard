@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useTasks, useTasksDispatch } from "../context/task-context";
+import { useTasks, useTasksDispatch } from "../../context/task-context";
 
 type TaskType = {
   id: number;
