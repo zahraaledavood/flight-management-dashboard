@@ -1,11 +1,18 @@
-import Header from "../components/header/header"
+import { useTickets } from "../hooks/use-tickets"
+import Tickets from "./tickets"
 
 const Dashboard = () => {
+
+    const { tickets, loading, error} = useTickets()
+    if (loading) return <div>Loading ...</div>
+    if(error) return <div>Error : {error}</div>
+
     return (
         <>
-        <Header items={[]} active='' />
-        <div style={{ marginTop: '60px' }}>Dashboard</div>
-      </>
+            {tickets.length && 
+                <Tickets/>
+            }
+        </>
     )
 }
 

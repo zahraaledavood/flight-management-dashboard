@@ -1,15 +1,15 @@
-import { Outlet } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import Header from '../components/header/header'
 
 const Layout = () => {
   return (
     <div className="flex">
       <aside className="bg-white w-[200px] min-h-screen border-r border-gray-200 pt-6 px-5">
-        <b className="text-xl font-bold text-black mb-10 font-mono">SkyDesk</b>
-        <nav className="flex flex-col gap-1 mt-10">
-          <span className='text-black text-lg'>Dashboard</span>
-          <span className='text-black text-lg'>Tickets</span>
-        </nav>
+        <b className="text-xl font-bold text-black mb-10 font-mono">SkyLia</b>
+        <div className='flex flex-col mt-10 gap-5'>
+          <NavLink to="/dashboard" className="text-black hover:text-blue-500 text-md">Dashboard</NavLink>
+          <NavLink to="/dashboard/tickets" className="text-black hover:text-blue-500 text-md">Tickets</NavLink>
+        </div>
       </aside>
 
       <div className="flex-1 flex flex-col w-full">

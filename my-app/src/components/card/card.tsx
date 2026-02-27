@@ -1,33 +1,37 @@
 import './card.scss';
-import Button from '../button/button.tsx';
-import Toggle from '../toggle/toggle.tsx';
+import LoginForm from '../login-form/login-form.tsx';
+import AuthService from '../../services/auth.service.ts'
+import { useAuth } from '../../context/auth-context.tsx'
+import { useNavigate } from 'react-router-dom';
+
 
 
 type CardProps = {
     imgSrc: string
-    title: string
-    content: string
-    remember: boolean
-    onLoginClick: () => void
-    onToggle: (value: boolean) => void
+
 }
 
-const Card = ({imgSrc, title, content, remember, onLoginClick, onToggle}: CardProps) => {
+const Card = ({imgSrc}: CardProps) => {
+    const { dispatch } = useAuth()
+    const navigate = useNavigate()
+
+    const handleLoginSubmit = async (data: { email: string; password: string }) => {
+        const result = await AuthService.login(data)
+        if (result.success) {
+          dispatch({ type: 'LOGIN', payload: { email: data.email, password: data.email } })
+          navigate('/dashboard')
+        }
+        return result
+      }
 
     return (
         <>
-            <div className="max-w-lg rounded-xl overflow-hidden shadow-xl bg-slate-800">
-                <img className="w-full" src={imgSrc} alt={title} />
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">
-                        {title}
-                    </div>
-                    <p className="text-white">
-                        {content}
-                    </p>
-                    <Button label="Login" onClick={onLoginClick} />
-                    <Toggle label="Remember me" active={remember} onChange={onToggle} />
+            <div className="w-max md:max-w-3xl mx-auto flex mt-40 shadow-xl border bg-white rounded-lg sm:rounded-0">
+                <img className="max-w-md items-start hidden sm:block" src={imgSrc}  />
+                <div className="bg-white mx-auto py-10 px-10">
+                    <LoginForm onLogin={handleLoginSubmit} />
                 </div>
+                
             </div>
         </>
     )

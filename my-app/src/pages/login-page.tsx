@@ -7,10 +7,9 @@ import SignUp from '../components/signup-form/signup-form'
 import Modal from '../components/modal/modal'
 import Card from '../components/card/card'
 import Header, { type HeaderItem } from '../components/header/header'
-import cardImg from '../../public/card-top.jpg'
+import cardImg from '../../public/card-top.png'
 
 const LoginPage = () => {
-  const [remember, setRemember] = useState(false)
   const [isSignupOpen, setIsSignup] = useState(false)
   const [isLoginOpen, setIsLogin] = useState(false)
   const { dispatch } = useAuth()
@@ -51,11 +50,6 @@ const LoginPage = () => {
       </Modal>
       <Card
         imgSrc={cardImg}
-        title="Welcome!"
-        content="Please enter your information."
-        onLoginClick={() => setIsLogin(true)}
-        onToggle={setRemember}
-        remember={remember}
       />
     </>
   )

@@ -20,7 +20,7 @@ const Header = ({items, active}: HeaderProps) => {
     return (
         <>
             <header className="w-full bg-white py-3.5 shadow-sm">
-                <ul className="flex w-full px-6 justify-start">
+                <ul className="flex w-full px-6 justify-center">
                    {state.isAuthenticated ? (
                         <>
                         <li className="px-5 text-black text-lg font-medium flex items-center">
