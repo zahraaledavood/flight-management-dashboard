@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./pages/login-page";
-import ProtectedRoute from "./components/protected-route";
+import LoginPage from "./pages/login-page.tsx";
+import ProtectedRoute from "./components/protected-route.tsx";
 import Dashboard from "./pages/dashboard.tsx";
 import Layout from "./layouts/layout.tsx";
 import Tickets from "./pages/tickets.tsx";
