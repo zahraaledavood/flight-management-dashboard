@@ -19,21 +19,21 @@ const Header = ({items, active}: HeaderProps) => {
 
     return (
         <>
-            <header className="w-full bg-white py-3.5 shadow-sm">
-                <ul className="flex w-full px-6 justify-center">
+            <header className="w-full py-1.5">
+                <ul className={`flex w-full px-7 mt-3 ${state.isAuthenticated ? "justify-between" : "justify-center"} `}>
                    {state.isAuthenticated ? (
                         <>
-                        <li className="px-5 text-black text-lg font-medium flex items-center">
+                        <li className=" text-gray-500 text-sm font-medium flex items-start">
                             Welcome, {state.user?.email}
                         </li>
-                        <li className="px-5">
+                        <li className="items-end text-sm font-medium text-red-600 hover:text-red-300">
                             <button
-                                className="bg-transparent text-lg font-medium text-red-400 hover:text-red-300"
+                                className="bg-transparent p-0"
                                 onClick={() => dispatch({ type: "LOGOUT" })}>
                                 Logout
                             </button>
                         </li>
-                    </>
+                        </>
                    ) : (
                     items.map((item)=> (
                         <li className="px-5" key={item.label}>

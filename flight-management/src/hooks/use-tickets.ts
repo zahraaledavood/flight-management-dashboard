@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+
 export type Ticket = {
   id: string;
   passengerName: string;
@@ -14,20 +15,20 @@ export type Ticket = {
   status: "confirmed" | "pending" | "cancelled" | "refunded";
 };
 
-const API_URL = "https://jsonkeeper.com/b/D5IQI";
+// const API_URL = '';   temporary bc of internet
 
 export const useTickets = () => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string |null>(null)
 
   useEffect(() => {
-    fetch(API_URL)
+    fetch("/tickets.json")
      .then(res => {
         if(!res.ok) throw new Error ('Failed to fetch')
             return res.json()
      })
-     .then(data => {
+     .then(data => {        
         setTickets(data)
         setLoading(false)
      })

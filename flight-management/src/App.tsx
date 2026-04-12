@@ -4,11 +4,13 @@ import ProtectedRoute from "./components/protected-route.tsx";
 import Dashboard from "./pages/dashboard.tsx";
 import Layout from "./layouts/layout.tsx";
 import Tickets from "./pages/tickets.tsx";
+import Setting from "./pages/setting.tsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+
         <Route path="/" element={<LoginPage />} />
 
         <Route
@@ -21,11 +23,13 @@ function App() {
         >
           <Route index element={<Dashboard />} />
           <Route path="tickets" element={<Tickets />} />
+          <Route path="setting" element={<Setting/>} />
 
           <Route path="*" element={<div>Not Found</div>} />
         </Route>
 
         <Route path="*" element={<LoginPage />} />
+
       </Routes>
     </BrowserRouter>
   );

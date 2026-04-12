@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { useTickets, type Ticket } from "../hooks/use-tickets";
+import Stats from "../components/stats/stats";
+import Search from "../components/search/search";
+import Filters from "../components/filters/filters";
+
 
 const statusStyles = {
   confirmed: "bg-green-50 text-green-700 border border-green-200",
@@ -12,6 +16,27 @@ const Tickets = () => {
   const { tickets, loading, error, deleteTicket } = useTickets();
   const [viewTicket, setViewTicket] = useState<Ticket | null>(null);
   const [editTicket, setEditTicket] = useState<Ticket | null>(null);
+  const [query, setQuery] = useState("");
+  const [status, setStatus] = useState("");
+  const [airline, setAirline] = useState("");
+
+  let displayTickets = tickets;
+
+  if (query) {
+    displayTickets = displayTickets.filter(ticket => 
+      Object.values(ticket).some(val => 
+        String(val).toLowerCase().includes(query.toLowerCase())
+      )
+    );
+  }
+
+  if (status) {
+    displayTickets = displayTickets.filter(ticket => ticket.status === status);
+  }
+
+  if (airline) {
+    displayTickets = displayTickets.filter(ticket => ticket.airline === airline);
+  }
 
   if (loading)
     return (
@@ -28,11 +53,16 @@ const Tickets = () => {
 
   return (
     <div className="overflow-x-auto">
+      <Stats/>
       <div className="bg-white border border-gray-200 rounded-xl overflow-scroll">
         <div className="flex items-center justify-between gap-3 p-4 border-b border-gray-200 flex-wrap">
           <span className="text-lg font-semibold text-gray-800">
             All Tickets
           </span>
+          <div className="flex gap-3">
+            <Search query={query} onSearch={setQuery}/>
+            <Filters status={status} onStatus={setStatus} airline={airline} onAirline={setAirline} />
+          </div>
         </div>
         <table className="w-full min-w-[700px] md:table-fixed">
           <thead className="bg-gray-50 border-b border-gray-200 overflow-scroll">
@@ -58,7 +88,7 @@ const Tickets = () => {
             </tr>
           </thead>
           <tbody>
-            {tickets.map((ticket) => (
+            {displayTickets.map((ticket) => (
               <tr
                 key={ticket.id}
                 className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
@@ -71,7 +101,7 @@ const Tickets = () => {
                     <span className="text-sm font-semibold text-gray-800">
                       {ticket.passengerName}
                     </span>
-                    <span className="text-xs text-gray-400 mt-0.5">
+                    <span className="text-xs text-gray-800 font-semibold mt-0.5">
                       {ticket.email}
                     </span>
                   </div>
@@ -102,19 +132,19 @@ const Tickets = () => {
                   <div className="flex items-center gap-1">
                     <button
                       onClick={() => setViewTicket(ticket)}
-                      className="w-8 h-9 bg-transparent rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-500 transition-all text-sm"
+                      className="w-7 h-7 bg-transparent rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-500 transition-all text-xs"
                     >
-                      🎫
+                      👁
                     </button>
                     <button
                       onClick={() => setEditTicket(ticket)}
-                      className="w-8 h-9 bg-transparent rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-amber-50 hover:border-amber-200 hover:text-amber-500 transition-all text-sm"
+                      className="w-7 h-7 bg-transparent rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-amber-50 hover:border-amber-200 hover:text-amber-500 transition-all text-xs"
                     >
                       ✎
                     </button>
                     <button
                       onClick={() => deleteTicket(ticket.id)}
-                      className="w-8 h-9 bg-transparent rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-red-50 hover:border-red-200 hover:text-red-500 transition-all text-sm"
+                      className="w-7 h-7 bg-transparent rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-red-50 hover:border-red-200 hover:text-red-500 transition-all text-xs"
                     >
                       ✕
                     </button>

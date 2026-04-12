@@ -18,7 +18,7 @@ type AuthAction =
 
 const initialState: AuthState = {
     user: null,
-    isAuthenticated: false
+    isAuthenticated: true //temporary bc of internet
 };
 
 export const AuthContext = createContext<
