@@ -28,15 +28,8 @@ export const useTickets = () => {
         if(!res.ok) throw new Error ('Failed to fetch');
         return res.json()
      })
-     .then(data => { 
-        const saved = localStorage.getItem("tickets");
-        const finalData = saved? JSON.parse(saved) : data;
-        
-        if (!saved){
-          localStorage.setItem("tickets", JSON.stringify(data));
-        }
-        
-        setTickets(finalData);
+     .then(data => {        
+        setTickets(data)
         setLoading(false)
      })
      .catch(err => {
@@ -45,23 +38,10 @@ export const useTickets = () => {
      })
   }, []);
 
-  const deletedTicket = (id: string) => {
-    setTickets(prev => {
-      const updated = prev.filter(t => t.id !== id);
-      localStorage.setItem("tickets", JSON.stringify(updated));
-      return updated
-    });
+  const deleteTicket = (id: string) => {
+    setTickets(prev => prev.filter(t => t.id !== id));
     toast.error('Ticket has been deleted successfully');
   }
 
-  const updatedTicket = (updated: Ticket) => {
-    setTickets(prev => {
-      const newList = prev.map(t => t.id === updated.id ? updated : t);
-      localStorage.setItem("tickets", JSON.stringify(newList));
-      return newList
-    });
-    toast.success('Ticket updated success')
-  }
-
-  return { tickets, loading, error, deletedTicket, updatedTicket}
+  return { tickets, loading, error, deleteTicket}
 };

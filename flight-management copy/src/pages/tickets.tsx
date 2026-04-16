@@ -5,8 +5,6 @@ import Search from "../components/search/search";
 import Filters from "../components/filters/filters";
 import Sort from "../components/sort/sort";
 import Pagination from "../components/pagination/pagination";
-import EditTicket from "../components/edit-ticket/edit-ticket";
-import DeleteTicket from "../components/delete-ticket/delete-ticket";
 
 // Types
 
@@ -68,8 +66,7 @@ const statusStyles = {
 // COMPONENT
 
 const Tickets = () => {
-  const { tickets, loading, error, deletedTicket, updatedTicket } = useTickets();
-  const [deleteTicket, setDeleteTicket] = useState<Ticket| null>(null);
+  const { tickets, loading, error, deleteTicket } = useTickets();
   const [viewTicket, setViewTicket] = useState<Ticket | null>(null);
   const [editTicket, setEditTicket] = useState<Ticket | null>(null);
   
@@ -144,7 +141,6 @@ const Tickets = () => {
               {[
                 "ID",
                 "Passenger",
-                "Phone",
                 "Route",
                 "Airline",
                 "Date",
@@ -180,11 +176,6 @@ const Tickets = () => {
                       {ticket.email}
                     </span>
                   </div>
-                </td>
-                <td className="px-4 py-4 text-sm text-gray-700 font-semibold">
-                  <span >
-                    {ticket.phone}
-                  </span>
                 </td>
                 <td className="px-4 py-4 font-mono text-sm text-gray-700">
                   <div className="flex gap-2">
@@ -223,7 +214,7 @@ const Tickets = () => {
                       ✎
                     </button>
                     <button
-                      onClick={() => setDeleteTicket(ticket)}
+                      onClick={() => deleteTicket(ticket.id)}
                       className="w-7 h-7 bg-transparent rounded-lg border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-red-50 hover:border-red-200 hover:text-red-500 transition-all text-xs"
                     >
                       ✕
@@ -248,21 +239,7 @@ const Tickets = () => {
 
       {viewTicket && <div>View</div>}
 
-      {editTicket &&
-       <EditTicket
-        ticket={editTicket}
-        onClose={() => setEditTicket(null)}
-        onSave={updatedTicket}
-       />
-      }
-
-      {deleteTicket && 
-        <DeleteTicket
-          ticket={deleteTicket}
-          onClose={() => setDeleteTicket(null)}
-          onConfirm={deletedTicket}
-        />
-      }
+      {editTicket && <div>Edit</div>}
     </div>
   );
 };
