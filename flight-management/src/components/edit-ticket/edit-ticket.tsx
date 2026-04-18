@@ -3,6 +3,7 @@ import {  type Ticket } from "../../hooks/use-tickets"
 import Modal from "../modal/modal"
 import './edit-ticket.scss'
 
+
 type EditTicketProps = {
     ticket: Ticket | null,
     onClose: () => void,
