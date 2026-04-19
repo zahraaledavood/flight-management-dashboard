@@ -25,7 +25,7 @@ const Header = ({items, active, showLogout = false}: HeaderProps) => {
                    {showLogout ? (
                         <>
                         <li className=" text-gray-500 text-sm font-medium flex items-start">
-                            Welcome, {state.user?.email}
+                            Welcome {state.user?.email}
                         </li>
                         <li className="items-end text-sm font-medium text-red-600 hover:text-red-300">
                             <button

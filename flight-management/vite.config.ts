@@ -7,7 +7,13 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
+      strategies: 'generateSW',
+      
+      devOptions: {
+        enabled: false, 
+        type: 'module',
+      },
+      
       manifest: {
         name: 'Flight Management Dashboard',
         short_name: 'Flight Manager',
@@ -20,42 +26,23 @@ export default defineConfig({
         orientation: 'portrait-primary',
         icons: [
           {
-            src: '/icon-192x192.png',
+            src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192"><rect fill="%2306b6d4" width="192" height="192"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="100" font-weight="bold" fill="white">FM</text></svg>',
             sizes: '192x192',
-            type: 'image/png',
+            type: 'image/svg+xml',
             purpose: 'any',
           },
           {
-            src: '/icon-512x512.png',
+            src: 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect fill="%2306b6d4" width="512" height="512"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="300" font-weight="bold" fill="white">FM</text></svg>',
             sizes: '512x512',
-            type: 'image/png',
+            type: 'image/svg+xml',
             purpose: 'any',
-          },
-          {
-            src: '/maskable-icon.png',
-            sizes: '192x192',
-            type: 'image/png',
-            purpose: 'maskable',
           },
         ],
         categories: ['business', 'productivity'],
-        screenshots: [
-          {
-            src: '/screenshot-1.png',
-            sizes: '540x720',
-            type: 'image/png',
-            form_factor: 'narrow',
-          },
-          {
-            src: '/screenshot-2.png',
-            sizes: '1280x720',
-            type: 'image/png',
-            form_factor: 'wide',
-          },
-        ],
       },
+      
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,json}'],
+        globPatterns: ['**/*.{js,css,html,ico,svg,png,jpg,json}'],
         cleanupOutdatedCaches: true,
         maximumFileSizeToCacheInBytes: 5000000,
         runtimeCaching: [
@@ -65,16 +52,11 @@ export default defineConfig({
             options: {
               cacheName: 'api-cache',
               expiration: {
-                maxAgeSeconds: 24 * 60 * 60, // 24 hours
+                maxAgeSeconds: 24 * 60 * 60,
               },
             },
           },
         ],
-      },
-      devOptions: {
-        enabled: true,
-        navigateFallback: 'index.html',
-        suppressWarnings: true,
       },
     }),
   ],

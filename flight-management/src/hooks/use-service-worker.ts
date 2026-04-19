@@ -1,32 +1,60 @@
-import { useState, useEffect } from "react"
+import { useEffect, useState } from 'react';
 
-export const useServiceWorkerUpdate = () => {
-    const [needsUpdate, setNeedsUpdate]= useState(false);
+interface ServiceWorkerUpdate {
+  needsUpdate: boolean;
+  reloadPage: () => void;
+  skipUpdate: () => void;
+}
 
-    useEffect(()=>{
-        if (!('serviceWorker' in navigator)) return;
+export const useServiceWorkerUpdate = (): ServiceWorkerUpdate => {
+  const [needsUpdate, setNeedsUpdate] = useState(false);
 
-        const checkForUpdate = () => {
-            navigator.serviceWorker.getRegistrations().then((registrations) => {
-                registrations.forEach((reg) => {
-                    reg.addEventListener('updatefound', ()=> {
-                        setNeedsUpdate(true);
-                    });
-                });
+  useEffect(() => {
+    const isProduction = import.meta.env.PROD;
+    
+    if (!isProduction || !('serviceWorker' in navigator)) {
+      return;
+    }
+
+    let registration: ServiceWorkerRegistration | null = null;
+
+    const registerSW = async () => {
+      try {
+        registration = await navigator.serviceWorker.register('/sw.js');
+        setInterval(() => {
+          registration?.update();
+        }, 60000);
+
+        // Listen for updates
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration?.installing;
+          if (newWorker) {
+            newWorker.addEventListener('statechange', () => {
+              if (
+                newWorker.state === 'installed' &&
+                navigator.serviceWorker.controller
+              ) {
+                console.log('✨ New version available!');
+                setNeedsUpdate(true);
+              }
             });
-        };
-
-        checkForUpdate();
-
-        const interval = setInterval(checkForUpdate, 60 * 60 * 1000);
-
-        return () => clearInterval(interval);
-    }, []);
-
-    const reloadPage = () => {
-        window.location.reload();
+          }
+        });
+      } catch (error) {
+        console.error('SW registration failed:', error);
+      }
     };
 
-    return {needsUpdate, reloadPage}
+    registerSW();
+  }, []);
 
-}
+  const reloadPage = () => {
+    window.location.reload();
+  };
+
+  const skipUpdate = () => {
+    setNeedsUpdate(false);
+  };
+
+  return { needsUpdate, reloadPage, skipUpdate };
+};
