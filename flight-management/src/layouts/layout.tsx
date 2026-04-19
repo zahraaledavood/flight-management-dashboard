@@ -14,7 +14,7 @@ const Layout = () => {
       </aside>
 
       <div className="flex-1 flex flex-col w-full">
-        <Header items={[]} active='' />
+        <Header items={[]} active='' showLogout={true} />
         <main className="p-6 ">
           <Outlet />
         </main>

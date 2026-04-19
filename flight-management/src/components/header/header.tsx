@@ -11,17 +11,18 @@ export type HeaderItem = {
   type HeaderProps = {
     items: HeaderItem[]
     active: string
+    showLogout?: boolean
   }
   
 
-const Header = ({items, active}: HeaderProps) => {
+const Header = ({items, active, showLogout = false}: HeaderProps) => {
     const {state, dispatch} = useAuth();
 
     return (
         <>
             <header className="w-full py-1.5">
-                <ul className={`flex w-full px-7 mt-3 ${state.isAuthenticated ? "justify-between" : "justify-center"} `}>
-                   {state.isAuthenticated ? (
+                <ul className={`flex w-full px-7 mt-3 ${showLogout ? "justify-between" : "justify-center"} `}>
+                   {showLogout ? (
                         <>
                         <li className=" text-gray-500 text-sm font-medium flex items-start">
                             Welcome, {state.user?.email}
