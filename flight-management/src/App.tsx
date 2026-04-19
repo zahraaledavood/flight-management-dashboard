@@ -7,12 +7,14 @@ import Layout from "./layouts/layout.tsx";
 import Tickets from "./pages/tickets.tsx";
 import Setting from "./pages/setting.tsx";
 import 'react-toastify/dist/ReactToastify.css';
+import { UpdateNotification } from "./components/common/update-notification.tsx";
 
 
 function App() {
   return (
     <>
      <BrowserRouter>
+     <UpdateNotification/>
       <Routes>
 
         <Route path="/" element={<LoginPage />} />
