@@ -10,7 +10,7 @@ export const UpdateNotification = () => {
       <p className="mb-2 font-semibold">New version available!</p>
       <button
         onClick={reloadPage}
-        className="w-full active:scale-95 transition text-sm text-white rounded-lg bg-sky-800 hover:bg-sky-400 hover:border-gray-900 hover:text-gray-900"
+        className="w-full active:scale-55 mx-auto transition text-sm text-white rounded-lg hover:border-gray-900 hover:text-gray-900"
       >
         Update Now
       </button>
