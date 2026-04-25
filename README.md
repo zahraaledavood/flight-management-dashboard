@@ -1,6 +1,6 @@
 # Flight Management Dashboard
 
-A comprehensive dashboard application for managing and monitoring flights, built primarily with TypeScript and modern web technologies.
+A comprehensive dashboard application for managing and monitoring flights, built primarily with TypeScript and React.
 
 ## Features
 
